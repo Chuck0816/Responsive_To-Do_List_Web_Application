@@ -1,1 +1,1 @@
-# Responsive_To-Do_List_Web_Application
+A simple and responsive web-based To-Do List application built with HTML, CSS, and JavaScript to help users manage their tasks efficiently. The app allows users to add, edit, and delete tasks dynamically, with a clean and intuitive interface.
