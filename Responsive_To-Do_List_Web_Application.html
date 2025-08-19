@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        /* Styles the main container of the to-do list */
+        .todo-container {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #040404;
+            border-radius: 5px;
+        }
+        
+        /* Removes default list styling for the to-do list */
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Styles each list item in the to-do list */
+        li {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Adds spacing for buttons in list items */
+        button {
+            margin-left: 10px;
+        }
+        .todo-container {
+            width: 350px;
+            background: #ffffff; /* White background for contrast */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px;
+            text-align: center;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9; /* Light background for the entire page */
+            color: #333; /* Dark text for better readability */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color:#000300; /* Green color for the heading */
+        }
+        input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    outline: none;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+}
+
+/* Add Task button */
+button.add-btn {
+    margin-top: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    background: #000800; /* Green background */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Smooth hover effect */
+}
+
+button.add-btn:hover {
+    background: black; /* Slightly darker green on hover */
+}
+
+/* Unordered list styling */
+.todo-list {
+    list-style-type: none; /* Removes bullet points */
+    padding: 0;
+    margin-top: 20px;
+}
+
+/* List item styling */
+li {
+    background: #f9f9f9; /* Light gray background for tasks */
+    padding: 10px;
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between; /* Align text and buttons */
+    align-items: center;
+    font-size: 16px;
+}
+
+/* Task text */
+li span {
+    flex: 1; /* Takes up all available space */
+    margin-right: 10px; /* Spacing between text and buttons */
+}
+
+/* Buttons inside list items */
+li button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    background: #ff5722; /* Orange background for delete button */
+    color: #fff; /* White text */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-left: 5px; /* Spacing between buttons */
+}
+
+li button:hover {
+    background: #e64a19; /* Darker orange on hover */
+}
+
+li button:first-child {
+    background: #2196F3; /* Blue background for edit button */
+}
+
+li button:first-child:hover {
+    background: #1e88e5; /* Darker blue on hover */
+}
+
+
+
+    </style>
+</head>
+<body>
+
+<div class="todo-container">  <!--It has a class="todo-container", which allows us to style it using CSS or reference it in JavaScript.--> 
+
+    <h1>To-Do List</h1> <!--Heading-->
+
+    <!-- Input field to add new tasks, id="taskInput": Gives this input field a unique identifier, allowing it to be accessed in JavaScript -->
+    <input type="text" id="taskInput" placeholder="Add a new task"> 
+    
+    <!-- Button to add a new task to the list -->
+    <button class="add-btn" onclick="addTask()">Add Task</button>
+    <!--onclick="addTask()": This triggers a JavaScript function called addTask() when the button is clicked. 
+    The function is expected to handle the logic for adding the task to the list.
+    class="add-btn": This class can be used to style the button using CSS.-->
+    
+    <!-- Unordered list to display the tasks. The <ul> element is an unordered list, which is used to display the tasks in the to-do list.-->
+    <ul class="todo-list" id="todoList"></ul>
+    <!--A class can be shared by multiple elements.
+    An id must be unique within the entire document.-->
+
+</div>
+
+<script>
+    // Function to add a task
+function addTask() {
+    const input = document.getElementById("taskInput"); 
+    // The input variable represents the entire input field element in the DOM
+
+    const taskText = input.value.trim();
+    // input.value retrives the actual input value. 
+
+    if (taskText !== "") {
+        const ul = document.getElementById("todoList");
+        // select the unordered list (<ul>) where the new tasks will be appended
+
+        // Create new list item
+        const li = document.createElement("li");
+
+        // Create task text element
+        const span = document.createElement("span");
+        span.textContent = taskText; // sets the content of the <span> to the user’s input.
+
+        // Create edit button
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.onclick = () => editTask(span);
+
+        // Create remove button
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Delete";
+        removeButton.onclick = () => removeTask(li);
+        // editButton.onclick = () => editTask(span) assigns a click event to the button. 
+        // When clicked, it calls the editTask() function, passing the <span> element (the task text) as an argument.
+
+
+        // Append buttons and text to the list item
+        li.appendChild(span);
+        li.appendChild(editButton);
+        li.appendChild(removeButton);
+
+        // Append list item to the list
+        ul.appendChild(li);
+
+        // Clear the input field
+        input.value = "";
+    }
+    else {
+            alert("Please enter a valid task.");
+        }
+}
+// Function to edit an existing task
+function editTask(span) {
+    // Prompt the user to enter a new task description
+    const newTask = prompt("Edit your task:", span.textContent);
+    
+    // Update the task only if the input is not null or empty
+    if (newTask !== null && newTask.trim() !== "") {
+        span.textContent = newTask.trim(); // Set the new task text
+    }
+}
+
+
+// Function to remove a task from the to-do list
+function removeTask(task){
+    const ul = document.getElementById("todoList"); // Get the list container
+    ul.removeChild(task); // Remove the specified task element
+}
+</script>
+
+</body>
+</html>
